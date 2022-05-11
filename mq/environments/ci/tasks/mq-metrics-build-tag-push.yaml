@@ -127,7 +127,7 @@ spec:
         imgNameRuntime=$imgName-runtime
         imgNameBuild=$imgName-build
 
-        # # This is a convenient way to tidy up old images, espcially after experimenting
+        # # This is a convenient way to tidy up old images, espcp4ially after experimenting
         # if [ "$1" = "CLEAN" ]
         # then
         #   buildah list -a -n | grep ubi-working-container | awk '{print $1}' | xargs buildah rm  2>/dev/null
@@ -245,7 +245,7 @@ spec:
 
         # # Now run the image. The assumption is that you have a queue manager running on this machine on port 1414.
         # # But you can see how this run step can be modified. Using the environment variables overrides values in the
-        # # configuration file which makes it easy to have a basic common config with only container-specific overrides
+        # # configuration file which makes it easy to have a basic common config with only container-specp4ific overrides
         # # provided via the env vars.
         # # We also map the port number to something different - the Prometheus engine would be configured to connect
         # # to 9158 even though the collector is listening on 9157 (the assigned number for MQ).

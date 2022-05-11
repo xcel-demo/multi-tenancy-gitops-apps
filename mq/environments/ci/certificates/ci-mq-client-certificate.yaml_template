@@ -1,7 +1,7 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: ci-mq-client-cert
+  name: cp4i-mq-client-cert
 spec:
   dnsNames:
     - >- 

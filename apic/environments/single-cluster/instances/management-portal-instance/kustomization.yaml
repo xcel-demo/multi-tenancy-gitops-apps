@@ -4,7 +4,7 @@ resources:
 
 ## IMPORTANT: In order to create secrets in our OpenShift cluster, this must be done through GitHub which is what GitOps dictates.
 ## In order to create secrets, which contain confidential information, and deliver these to GitHub to get these created in our cluster by the GitOps tools,
-## we MUST SEAL the secrets. We are not sealing the secrets for simplicity for these enablement asset but sealing/encrypting the secrets you deliver to GitHub
+## we MUST SEAL the secrets. We are not sealing the secrets for simplicp4ity for these enablement asset but sealing/encrypting the secrets you deliver to GitHub
 ## is a MUST practice to enforce in production environments
 
 ## IMPORTANT: This must be the same CA used for the management and portal components!

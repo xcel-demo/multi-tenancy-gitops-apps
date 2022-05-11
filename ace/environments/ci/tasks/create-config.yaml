@@ -61,7 +61,7 @@ spec:
           value: $(workspaces.workspace.path)
         - name: RENDERED_CONFIG_DIRECTORY
           value: $(params.rendered-config-directory)
-      image: image-registry.openshift-image-registry.svc:5000/ci/sh-tools
+      image: image-registry.openshift-image-registry.svc:5000/cp4i/sh-tools
       script: |
         #!/bin/bash
 
@@ -155,7 +155,7 @@ spec:
           value: $(results.configurations.path)
         - name: KUSTOMIZATION_PATH
           value: $(workspaces.workspace.path)/$(params.kustomization-path)
-      image: image-registry.openshift-image-registry.svc:5000/ci/sh-tools
+      image: image-registry.openshift-image-registry.svc:5000/cp4i/sh-tools
       script: |-
         #!/usr/bin/env bash
 

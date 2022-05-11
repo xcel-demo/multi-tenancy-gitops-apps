@@ -2,7 +2,7 @@ kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
   name: el-cnkt-event-listener
-  namespace: ci
+  namespace: cp4i
   labels:
     app: cnkt-event-listener
     app.kubernetes.io/managed-by: EventListener

@@ -1,6 +1,6 @@
 resources:
-#- certificates/ci-mq-client-certificate.yaml
-#- certificates/ci-mq-server-certificate.yaml
+#- certificates/cp4i-mq-client-certificate.yaml
+#- certificates/cp4i-mq-server-certificate.yaml
 - configmaps/gitops-repo-configmap.yaml
 #- eventlisteners/cntk-event-listener.yaml
 #- triggerbindings/cntk-binding.yaml
@@ -14,7 +14,7 @@ resources:
 - pipelines/mq-spring-app-dev-pipeline.yaml
 - roles/custom-pipeline-sa-clusterrole.yaml
 - roles/custom-pipeline-sa-role.yaml
-- roles/custom-ci-pipeline-sa-rolebinding.yaml
+- roles/custom-cp4i-pipeline-sa-rolebinding.yaml
 - roles/custom-dev-pipeline-sa-rolebinding.yaml
 - roles/custom-staging-pipeline-sa-rolebinding.yaml
 - roles/custom-prod-pipeline-sa-rolebinding.yaml

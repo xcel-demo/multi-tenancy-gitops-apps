@@ -30,8 +30,8 @@ spec:
       description: "Body of pull request"
     - name: github-pr-token-secret-name
       type: string
-      default: cicd-acme
-      description: "Personal access token for CICD bot user"
+      default: cp4icd-acme
+      description: "Personal access token for cp4iCD bot user"
 
   workspaces:
     - name: shared-workspace
@@ -127,9 +127,9 @@ spec:
         - name: repo-directory
           value: gitops-repo
         - name: user-name
-          value: "cicd.acme"
+          value: "cp4icd.acme"
         - name: user-email
-          value: "cicd@acme.com"
+          value: "cp4icd@acme.com"
         - name: kustomization-path
           value: gitops-repo/ace/environments/base/kustomization.yaml
         - name: branch_name

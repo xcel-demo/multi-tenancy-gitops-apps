@@ -209,7 +209,7 @@ spec:
             cat "${SUBDIR_DEST}/${YAML_FILE}"
 
             yq r "${SUBDIR_DEST}/${YAML_FILE}" -j | \
-              jq --arg APP_NAME "${APP_NAME}" --arg VERSION "${VERSION}" --arg REPO "${HELM_URL}" '.dependencies |= map((select(.name == $APP_NAME) | .version = $VERSION | .repository = $REPO) // .)' | \
+              jq --arg APP_NAME "${APP_NAME}" --arg VERSION "${VERSION}" --arg REPO "${HELM_URL}" '.dependencp4ies |= map((select(.name == $APP_NAME) | .version = $VERSION | .repository = $REPO) // .)' | \
               yq r --prettyPrint - > "${SUBDIR_DEST}/${YAML_FILE}.new"
 
             rm "${SUBDIR_DEST}/${YAML_FILE}"
@@ -225,7 +225,7 @@ spec:
             # rm -rf ${SUBDIR_DEST}/${YAML_FILE} && cp -r ${SUBDIR_SRC}/${YAML_FILE} ${SUBDIR_DEST}/${YAML_FILE}
 
             yq r "${SUBDIR_DEST}/${YAML_FILE}" -j | \
-              jq --arg APP_NAME "${APP_NAME}" --arg VERSION "${VERSION}" --arg REPO "${HELM_URL}" '.dependencies |= map((select(.name == $APP_NAME) | .version = $VERSION | .repository = $REPO) // .)' | \
+              jq --arg APP_NAME "${APP_NAME}" --arg VERSION "${VERSION}" --arg REPO "${HELM_URL}" '.dependencp4ies |= map((select(.name == $APP_NAME) | .version = $VERSION | .repository = $REPO) // .)' | \
               yq r --prettyPrint - > "${SUBDIR_DEST}/${YAML_FILE}.new"
 
             rm "${SUBDIR_DEST}/${YAML_FILE}"
@@ -256,7 +256,7 @@ spec:
           EOF
 
           cat <<EOF >"${SUBDIR_DEST}/${YAML_FILE}"
-          dependencies:
+          dependencp4ies:
             - name: ${APP_NAME}
               version: ${VERSION}
               repository: ${HELM_URL}
@@ -283,16 +283,16 @@ spec:
             git commit -m "Updates ${APP_NAME} to ${VERSION}"
             git push -v
           else
-            git checkout -b cntk-ci-pipeline-${APP_NAME}-${APP_VERSION}
+            git checkout -b cntk-cp4i-pipeline-${APP_NAME}-${APP_VERSION}
 
             # push changes to git
             git status
             git add "${SUBDIR_DEST}/"
             git commit -m "Cloudnative toolkit pipeline updates ${APP_NAME}" --no-edit --signoff
 
-            git push origin cntk-ci-pipeline-${APP_NAME}-${APP_VERSION}
+            git push origin cntk-cp4i-pipeline-${APP_NAME}-${APP_VERSION}
 
             GIT_PUSH_URL="${PROTOCOL}://api.github.com/repos/${GIT_ORG}/${GIT_REPO}/pulls"
-            curl -u ${GIT_AUTH_USER}:${GIT_AUTH_PWD} -d '{"title":"PR to promote to '$(params.dest-environment)' for '$(params.app-name)'","base":"'${GIT_BRANCH}'", "head":"'${GIT_ORG}':cntk-ci-pipeline-'${APP_NAME}'-'${APP_VERSION}'"}' ${GIT_PUSH_URL}
+            curl -u ${GIT_AUTH_USER}:${GIT_AUTH_PWD} -d '{"title":"PR to promote to '$(params.dest-environment)' for '$(params.app-name)'","base":"'${GIT_BRANCH}'", "head":"'${GIT_ORG}':cntk-cp4i-pipeline-'${APP_NAME}'-'${APP_VERSION}'"}' ${GIT_PUSH_URL}
 
           fi

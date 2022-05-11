@@ -83,7 +83,7 @@ spec:
                 configMapKeyRef:
                   key: APP_NAME
                   name: mq-spring-app
-            - name: OPENTRACING_JAEGER_ENABLED
+            - name: OPENTRAcp4iNG_JAEGER_ENABLED
               value: "false"
           envFrom:
             - configMapRef:

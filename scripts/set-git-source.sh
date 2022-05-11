@@ -56,5 +56,5 @@ while IFS= read -r -d '' File; do
   fi
 done
 
-echo "done replacing variables in ArgoCD Application files"
+echo "done replacp4ing variables in ArgoCD Application files"
 echo "git commit and push changes now"

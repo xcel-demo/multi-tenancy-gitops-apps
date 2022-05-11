@@ -28,7 +28,7 @@ spec:
     - name: tools-image
       default: quay.io/ibmgaragecloud/ibmcloud-dev:v2.0.4
   volumes:
-    - name: oci-image
+    - name: ocp4i-image
       emptyDir: {}
   steps:
     - name: trivy-pull
@@ -47,8 +47,8 @@ spec:
               key: REGISTRY_PASSWORD
               optional: true
       volumeMounts:
-        - mountPath: /var/oci
-          name: oci-image
+        - mountPath: /var/ocp4i
+          name: ocp4i-image
       securityContext:
         privileged: true
       script: |
@@ -60,7 +60,7 @@ spec:
         fi
         IMAGE_FROM=$(params.image-url)
         REGISTRY_SERVER_FROM=$(echo "${IMAGE_FROM}" | awk -F / '{print $1}')
-        IMAGE_TO="oci:/var/oci/image"
+        IMAGE_TO="ocp4i:/var/ocp4i/image"
         IMAGE_FROM_TLS_VERIFY=$(params.IMAGE_FROM_TLS_VERIFY)
         echo "Tagging ${IMAGE_FROM} as ${IMAGE_TO}"
         set +x
@@ -77,8 +77,8 @@ spec:
     - name: trivy-scan
       image: $(params.TRIVY_IMAGE)
       volumeMounts:
-        - mountPath: /var/oci
-          name: oci-image
+        - mountPath: /var/ocp4i
+          name: ocp4i-image
       script: |
           set -ex
           PERFORM_SCAN="$(params.scan-trivy)"
@@ -86,7 +86,7 @@ spec:
             echo "User selected to skip scanning. Skipping Trivy scan."
             exit 0
           fi
-          PATH_TO_IMAGE="/var/oci/image"
+          PATH_TO_IMAGE="/var/ocp4i/image"
           echo -e "Trivy Security Scan image in registry"
           trivy image --exit-code 0 --input ${PATH_TO_IMAGE}
           trivy image --exit-code 1 --severity CRITICAL --input ${PATH_TO_IMAGE}

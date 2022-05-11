@@ -44,8 +44,8 @@ spec:
         registry)
       name: TLSVERIFY
       type: string
-    - default: oci
-      description: 'The format of the built container, oci or docker'
+    - default: ocp4i
+      description: 'The format of the built container, ocp4i or docker'
       name: FORMAT
       type: string
     - default: ''

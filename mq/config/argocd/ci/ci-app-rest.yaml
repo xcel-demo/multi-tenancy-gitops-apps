@@ -1,18 +1,18 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: apps-mq-rest-ci-1
+  name: apps-mq-rest-cp4i-1
   annotations:
     argocd.argoproj.io/sync-wave: "300"
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: ci
+    namespace: cp4i
     server: https://kubernetes.default.svc
   project: applications
   source:
-    path: mq/environments/ci
+    path: mq/environments/cp4i
     repoURL: https://github.com/xcel-demo/multi-tenancy-gitops-apps.git
     targetRevision: master
   syncPolicy:

@@ -203,11 +203,11 @@ spec:
 
           if [[ "$(params.git-pr)" == "true" ]]; then
             git_version="$(git rev-parse --short HEAD)"
-            git checkout -b cntk-ci-pipeline-${git_version}
-            git push origin cntk-ci-pipeline-${git_version}
+            git checkout -b cntk-cp4i-pipeline-${git_version}
+            git push origin cntk-cp4i-pipeline-${git_version}
 
             GIT_PUSH_URL="${GIT_PROTOCOL}://api.github.com/repos/${GIT_ORG}/${GIT_REPO}/pulls"
-            curl -u ${GIT_USERNAME}:${GIT_PASSWORD} -d '{"title":"PR to promote to $(params.destination-env) environment","base":"'${GIT_BRANCH}'", "head":"'${GIT_ORG}':cntk-ci-pipeline-'${git_version}'"}' ${GIT_PUSH_URL}
+            curl -u ${GIT_USERNAME}:${GIT_PASSWORD} -d '{"title":"PR to promote to $(params.destination-env) environment","base":"'${GIT_BRANCH}'", "head":"'${GIT_ORG}':cntk-cp4i-pipeline-'${git_version}'"}' ${GIT_PUSH_URL}
           else
             echo "Pushing directly to repository"
             git push -v

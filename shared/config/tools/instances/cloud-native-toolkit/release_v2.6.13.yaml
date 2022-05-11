@@ -117,12 +117,12 @@ spec:
           BASE_IMAGE="${REGISTRY_SERVER_VALUE}/${REGISTRY_NAMESPACE_VALUE}"
 
           if [[ -z "${SERVICE_NAME}" ]]; then
-            # if service name not passed explicit assume to use image repository
+            # if service name not passed explicp4it assume to use image repository
             SERVICE_NAME="${REGISTRY_REPOSITORY_VALUE}"
           fi
 
           if [[ -z "${VERSION}" ]]; then
-            # if version not passed explicit assume to use image tag
+            # if version not passed explicp4it assume to use image tag
             VERSION="${REGISTRY_TAG_VALUE}"
           fi
 
@@ -989,7 +989,7 @@ spec:
     - name: TRIVY_IMAGE
       default: quay.io/ibmgaragecloud/aquasec-trivy
   volumes:
-    - name: oci-image
+    - name: ocp4i-image
       emptyDir: {}
   steps:
     - name: pull-image
@@ -1008,8 +1008,8 @@ spec:
               key: REGISTRY_PASSWORD
               optional: true
       volumeMounts:
-        - mountPath: /var/oci
-          name: oci-image
+        - mountPath: /var/ocp4i
+          name: ocp4i-image
       securityContext:
         privileged: true
       script: |
@@ -1020,7 +1020,7 @@ spec:
         fi
         IMAGE_FROM=$(params.image-url)
         REGISTRY_SERVER_FROM=$(echo "${IMAGE_FROM}" | awk -F / '{print $1}')
-        IMAGE_TO="oci:/var/oci/image"
+        IMAGE_TO="ocp4i:/var/ocp4i/image"
         IMAGE_FROM_TLS_VERIFY=$(params.IMAGE_FROM_TLS_VERIFY)
         echo "Tagging ${IMAGE_FROM} as ${IMAGE_TO}"
         set +x
@@ -1037,8 +1037,8 @@ spec:
     - name: scan-image
       image: $(params.TRIVY_IMAGE)
       volumeMounts:
-        - mountPath: /var/oci
-          name: oci-image
+        - mountPath: /var/ocp4i
+          name: ocp4i-image
       script: |
           set -e
           PERFORM_SCAN="$(params.scan-image)"
@@ -1046,7 +1046,7 @@ spec:
             echo "User selected to skip scanning. Skipping Trivy scan."
             exit 0
           fi
-          PATH_TO_IMAGE="/var/oci/image"
+          PATH_TO_IMAGE="/var/ocp4i/image"
           echo -e "Trivy Security Scan image in registry"
           trivy image --exit-code 0 --input ${PATH_TO_IMAGE}
           trivy image --exit-code 1 --severity CRITICAL --input ${PATH_TO_IMAGE}
@@ -1153,8 +1153,8 @@ kind: Task
 metadata:
   name: ibm-smoke-tests-mq-v2-6-13
   annotations:
-    description: Deploys the application to the CI environment for verification using the provided helm chart
-    app.openshift.io/description: Deploys the application to the CI environment for verification using the provided helm chart
+    description: Deploys the application to the cp4i environment for verification using the provided helm chart
+    app.openshift.io/description: Deploys the application to the cp4i environment for verification using the provided helm chart
     app.openshift.io/vcs-uri: https://github.com/IBM/ibm-garage-tekton-tasks
     app.openshift.io/vcs-ref: master
   labels:
@@ -1296,13 +1296,13 @@ spec:
           helm lint ${CHART_PATH}
 
           PREFIX=""
-          if [[ -f "${CHART_PATH}/requirements.yaml" ]] || grep -Eq "^dependencies:" "${CHART_PATH}/Chart.yaml"; then
+          if [[ -f "${CHART_PATH}/requirements.yaml" ]] || grep -Eq "^dependencp4ies:" "${CHART_PATH}/Chart.yaml"; then
               DEPENDENCY_FILE="${CHART_PATH}/Chart.yaml"
               if [[ -f "${CHART_PATH}/requirements.yaml" ]]; then
                   DEPENDENCY_FILE="${CHART_PATH}/requirements.yaml"
               fi
 
-              PREFIX="$(yq r -j "${DEPENDENCY_FILE}" | jq -r '.dependencies | .[] | .alias // .name' | head -1)."
+              PREFIX="$(yq r -j "${DEPENDENCY_FILE}" | jq -r '.dependencp4ies | .[] | .alias // .name' | head -1)."
           fi
 
           # Update helm chart with repository and tag values
@@ -1320,7 +1320,7 @@ spec:
 
           helm dep update "${CHART_PATH}"
 
-          # Using 'upgrade --install" for rolling updates. Note that subsequent updates will occur in the same namespace the release is currently deployed in, ignoring the explicit--namespace argument".
+          # Using 'upgrade --install" for rolling updates. Note that subsequent updates will occur in the same namespace the release is currently deployed in, ignoring the explicp4it--namespace argument".
           helm template ${RELEASE_NAME} ${CHART_PATH} \
               --namespace ${APP_NAMESPACE} \
               --set ${PREFIX}ingress.tlsSecretName="${TLS_SECRET_NAME}" \
@@ -1519,7 +1519,7 @@ spec:
       image: $(params.js-image)
       workingDir: $(params.source-dir)
       script: |
-        CI=true npm test
+        cp4i=true npm test
     - name: publish-pact
       image: $(params.js-image)
       workingDir: $(params.source-dir)
@@ -2604,7 +2604,7 @@ spec:
         npm i -g release-it
 
         release-it patch \
-          --ci \
+          --cp4i \
           --no-npm \
           --no-git.push \
           --no-git.requireCleanWorkingDir \
@@ -2797,7 +2797,7 @@ spec:
             cat "${SUBDIR}/${YAML_FILE}"
 
             yq r "${SUBDIR}/${YAML_FILE}" -j | \
-              jq --arg APP_NAME "${APP_NAME}" --arg VERSION "${VERSION}" --arg REPO "${HELM_URL}" '.dependencies |= map((select(.name == $APP_NAME) | .version = $VERSION | .repository = $REPO) // .)' | \
+              jq --arg APP_NAME "${APP_NAME}" --arg VERSION "${VERSION}" --arg REPO "${HELM_URL}" '.dependencp4ies |= map((select(.name == $APP_NAME) | .version = $VERSION | .repository = $REPO) // .)' | \
               yq r --prettyPrint - > "${SUBDIR}/${YAML_FILE}.new"
 
             rm "${SUBDIR}/${YAML_FILE}"
@@ -2821,7 +2821,7 @@ spec:
           EOF
 
           cat <<EOF >"${SUBDIR}/${YAML_FILE}"
-          dependencies:
+          dependencp4ies:
             - name: ${APP_NAME}
               version: ${VERSION}
               repository: >-
@@ -2845,7 +2845,7 @@ spec:
             exit 0
           fi
 
-          git checkout -b cntk-ci-pipeline-${APP_NAME}-${VERSION}
+          git checkout -b cntk-cp4i-pipeline-${APP_NAME}-${VERSION}
 
           # push changes to git
           git add "${SUBDIR}/"
@@ -2853,10 +2853,10 @@ spec:
           git remote rm origin
 
           git remote add origin ${GIT_URL} > /dev/null 2>&1
-          git push origin cntk-ci-pipeline-${APP_NAME}-${VERSION}
+          git push origin cntk-cp4i-pipeline-${APP_NAME}-${VERSION}
 
           GIT_PUSH_URL="${PROTOCOL}://api.github.com/repos/${GIT_ORG}/${GIT_REPO}/pulls"
-          curl -u ${GIT_AUTH_USER}:${GIT_AUTH_PWD} -d '{"title":"PR to promote to next environment","base":"'${GIT_BRANCH}'", "head":"'${GIT_ORG}':cntk-ci-pipeline-'${APP_NAME}'-'${VERSION}'"}' ${GIT_PUSH_URL}
+          curl -u ${GIT_AUTH_USER}:${GIT_AUTH_PWD} -d '{"title":"PR to promote to next environment","base":"'${GIT_BRANCH}'", "head":"'${GIT_ORG}':cntk-cp4i-pipeline-'${APP_NAME}'-'${VERSION}'"}' ${GIT_PUSH_URL}
 
 ---
 apiVersion: tekton.dev/v1beta1
@@ -2864,8 +2864,8 @@ kind: Task
 metadata:
   name: ibm-deploy-v2-6-13
   annotations:
-    description: Deploys the application to the CI environment for verification using the provided helm chart
-    app.openshift.io/description: Deploys the application to the CI environment for verification using the provided helm chart
+    description: Deploys the application to the cp4i environment for verification using the provided helm chart
+    app.openshift.io/description: Deploys the application to the cp4i environment for verification using the provided helm chart
     app.openshift.io/vcs-uri: https://github.com/IBM/ibm-garage-tekton-tasks
     app.openshift.io/vcs-ref: master
   labels:
@@ -3007,13 +3007,13 @@ spec:
           helm lint ${CHART_PATH}
 
           PREFIX=""
-          if [[ -f "${CHART_PATH}/requirements.yaml" ]] || grep -Eq "^dependencies:" "${CHART_PATH}/Chart.yaml"; then
+          if [[ -f "${CHART_PATH}/requirements.yaml" ]] || grep -Eq "^dependencp4ies:" "${CHART_PATH}/Chart.yaml"; then
               DEPENDENCY_FILE="${CHART_PATH}/Chart.yaml"
               if [[ -f "${CHART_PATH}/requirements.yaml" ]]; then
                   DEPENDENCY_FILE="${CHART_PATH}/requirements.yaml"
               fi
 
-              PREFIX="$(yq r -j "${DEPENDENCY_FILE}" | jq -r '.dependencies | .[] | .alias // .name' | head -1)."
+              PREFIX="$(yq r -j "${DEPENDENCY_FILE}" | jq -r '.dependencp4ies | .[] | .alias // .name' | head -1)."
           fi
 
           # Update helm chart with repository and tag values
@@ -3031,7 +3031,7 @@ spec:
 
           helm dep update "${CHART_PATH}"
 
-          # Using 'upgrade --install" for rolling updates. Note that subsequent updates will occur in the same namespace the release is currently deployed in, ignoring the explicit--namespace argument".
+          # Using 'upgrade --install" for rolling updates. Note that subsequent updates will occur in the same namespace the release is currently deployed in, ignoring the explicp4it--namespace argument".
           helm template ${RELEASE_NAME} ${CHART_PATH} \
               --namespace ${APP_NAMESPACE} \
               --set ${PREFIX}ingress.tlsSecretName="${TLS_SECRET_NAME}" \
@@ -3665,13 +3665,13 @@ spec:
           echo $(helm version)
 
           PREFIX=""
-          if [[ -f "${CHART_PATH}/requirements.yaml" ]] || grep -Eq "^dependencies:" "${CHART_PATH}/Chart.yaml"; then
+          if [[ -f "${CHART_PATH}/requirements.yaml" ]] || grep -Eq "^dependencp4ies:" "${CHART_PATH}/Chart.yaml"; then
               DEPENDENCY_FILE="${CHART_PATH}/Chart.yaml"
               if [[ -f "${CHART_PATH}/requirements.yaml" ]]; then
                   DEPENDENCY_FILE="${CHART_PATH}/requirements.yaml"
               fi
 
-              PREFIX="$(yq r -j "${DEPENDENCY_FILE}" | jq -r '.dependencies | .[] | .alias // .name' | head -1)."
+              PREFIX="$(yq r -j "${DEPENDENCY_FILE}" | jq -r '.dependencp4ies | .[] | .alias // .name' | head -1)."
           fi
 
           # Update helm chart with repository and tag values
@@ -3992,7 +3992,7 @@ spec:
     - name: tools-image
       default: quay.io/ibmgaragecloud/ibmcloud-dev:v2.0.4
   volumes:
-    - name: oci-image
+    - name: ocp4i-image
       emptyDir: {}
   steps:
     - name: trivy-pull
@@ -4011,8 +4011,8 @@ spec:
               key: REGISTRY_PASSWORD
               optional: true
       volumeMounts:
-        - mountPath: /var/oci
-          name: oci-image
+        - mountPath: /var/ocp4i
+          name: ocp4i-image
       securityContext:
         privileged: true
       script: |
@@ -4024,7 +4024,7 @@ spec:
         fi
         IMAGE_FROM=$(params.image-url)
         REGISTRY_SERVER_FROM=$(echo "${IMAGE_FROM}" | awk -F / '{print $1}')
-        IMAGE_TO="oci:/var/oci/image"
+        IMAGE_TO="ocp4i:/var/ocp4i/image"
         IMAGE_FROM_TLS_VERIFY=$(params.IMAGE_FROM_TLS_VERIFY)
         echo "Tagging ${IMAGE_FROM} as ${IMAGE_TO}"
         set +x
@@ -4041,8 +4041,8 @@ spec:
     - name: trivy-scan
       image: $(params.TRIVY_IMAGE)
       volumeMounts:
-        - mountPath: /var/oci
-          name: oci-image
+        - mountPath: /var/ocp4i
+          name: ocp4i-image
       script: |
           set -ex
           PERFORM_SCAN="$(params.scan-trivy)"
@@ -4050,7 +4050,7 @@ spec:
             echo "User selected to skip scanning. Skipping Trivy scan."
             exit 0
           fi
-          PATH_TO_IMAGE="/var/oci/image"
+          PATH_TO_IMAGE="/var/ocp4i/image"
           echo -e "Trivy Security Scan image in registry"
           trivy image --exit-code 0 --input ${PATH_TO_IMAGE}
           trivy image --exit-code 1 --severity CRITICAL --input ${PATH_TO_IMAGE}
@@ -4328,7 +4328,7 @@ spec:
             cat "${SUBDIR}/${YAML_FILE}"
 
             yq r "${SUBDIR}/${YAML_FILE}" -j | \
-              jq --arg APP_NAME "${APP_NAME}" --arg VERSION "${VERSION}" --arg REPO "${HELM_URL}" '.dependencies |= map((select(.name == $APP_NAME) | .version = $VERSION | .repository = $REPO) // .)' | \
+              jq --arg APP_NAME "${APP_NAME}" --arg VERSION "${VERSION}" --arg REPO "${HELM_URL}" '.dependencp4ies |= map((select(.name == $APP_NAME) | .version = $VERSION | .repository = $REPO) // .)' | \
               yq r --prettyPrint - > "${SUBDIR}/${YAML_FILE}.new"
 
             rm "${SUBDIR}/${YAML_FILE}"
@@ -4352,7 +4352,7 @@ spec:
           EOF
 
           cat <<EOF >"${SUBDIR}/${YAML_FILE}"
-          dependencies:
+          dependencp4ies:
             - name: ${APP_NAME}
               version: ${VERSION}
               repository: >-

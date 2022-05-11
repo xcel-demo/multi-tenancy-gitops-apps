@@ -2,7 +2,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: trigger-performance-test
-  namespace: ci
+  namespace: cp4i
   annotations:
     argocd.argoproj.io/hook: PostSync
 spec:
@@ -16,7 +16,7 @@ spec:
           - tkn
         args:
           - -n
-          - ci
+          - cp4i
           - pipeline
           - start
           - ace-promote-stage-prod

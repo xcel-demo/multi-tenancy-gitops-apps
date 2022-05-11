@@ -12,7 +12,7 @@
 SEALED_SECRET_NAMESPACE=${SEALED_SECRET_NAMESPACE:-sealed-secrets}
 SEALED_SECRET_CONTOLLER_NAME=${SEALED_SECRET_CONTOLLER_NAME:-sealed-secrets}
 
-oc get secret artifactory-access -n tools -o yaml | sed 's/namespace: .*/namespace: ci/' |  oc apply -f - --dry-run=client -o yaml > delete-artifactory-access-secret.yaml
+oc get secret artifactory-access -n tools -o yaml | sed 's/namespace: .*/namespace: cp4i/' |  oc apply -f - --dry-run=client -o yaml > delete-artifactory-access-secret.yaml
 
 # Change existing password
 #oc exec pod/artifactory-artifactory-0 -n tools -it -- curl -XPATCH -uadmin:${ARTIFACTORY_CURRENT_PASSWORD} http://localhost:8040/access/api/v1/users/admin -H 'Content-Type: Application/json' -d '{ "password" : "'"${ARTIFACTORY_NEW_PASSWORD}"'" }' > /dev/null
@@ -29,7 +29,7 @@ oc get secret artifactory-access -n tools -o yaml | sed 's/namespace: .*/namespa
 #--dry-run=client -o yaml > delete-artifactory-access-secret.yaml
 
 # Encrypt the secret using kubeseal and private key from the cluster
-kubeseal -n ci --controller-name=${SEALED_SECRET_CONTOLLER_NAME} --controller-namespace=${SEALED_SECRET_NAMESPACE} -o yaml < delete-artifactory-access-secret.yaml > artifactory-access-secret.yaml
+kubeseal -n cp4i --controller-name=${SEALED_SECRET_CONTOLLER_NAME} --controller-namespace=${SEALED_SECRET_NAMESPACE} -o yaml < delete-artifactory-access-secret.yaml > artifactory-access-secret.yaml
 
 # NOTE, do not check delete-artifactory-access-secret.yaml into git!
 rm delete-artifactory-access-secret.yaml

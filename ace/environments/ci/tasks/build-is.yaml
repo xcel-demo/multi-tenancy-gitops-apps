@@ -39,7 +39,7 @@ spec:
     - name: ssh-directory
   steps:
     - name: create-custom-resource
-      image: image-registry.openshift-image-registry.svc:5000/ci/sh-tools
+      image: image-registry.openshift-image-registry.svc:5000/cp4i/sh-tools
       workingDir: $(workspaces.input.path)
       env:
         - name: IS_MANIFEST_TEMPLATE
@@ -83,7 +83,7 @@ spec:
           value: $(params.destination_is_manifest)
         - name: KUSTOMIZATION_PATH
           value: $(params.kustomization-path)
-      image: image-registry.openshift-image-registry.svc:5000/ci/sh-tools
+      image: image-registry.openshift-image-registry.svc:5000/cp4i/sh-tools
       script: |-
         #!/usr/bin/env bash
 

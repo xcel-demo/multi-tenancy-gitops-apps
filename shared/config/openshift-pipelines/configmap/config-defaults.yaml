@@ -21,34 +21,34 @@ data:
     # to actually change the configuration.
 
     # default-timeout-minutes contains the default number of
-    # minutes to use for TaskRun and PipelineRun, if none is specified.
+    # minutes to use for TaskRun and PipelineRun, if none is specp4ified.
     default-timeout-minutes: "60"  # 60 minutes
 
     # default-service-account contains the default service account name
-    # to use for TaskRun and PipelineRun, if none is specified.
+    # to use for TaskRun and PipelineRun, if none is specp4ified.
     default-service-account: "default"
 
     # default-managed-by-label-value contains the default value given to the
     # "app.kubernetes.io/managed-by" label applied to all Pods created for
-    # TaskRuns. If a user's requested TaskRun specifies another value for this
+    # TaskRuns. If a user's requested TaskRun specp4ifies another value for this
     # label, the user's request supercedes.
     default-managed-by-label-value: "tekton-pipelines"
 
     # default-pod-template contains the default pod template to use
-    # TaskRun and PipelineRun, if none is specified. If a pod template
-    # is specified, the default pod template is ignored.
+    # TaskRun and PipelineRun, if none is specp4ified. If a pod template
+    # is specp4ified, the default pod template is ignored.
     # default-pod-template:
 
     # default-cloud-events-sink contains the default CloudEvents sink to be
-    # used for TaskRun and PipelineRun, when no sink is specified.
+    # used for TaskRun and PipelineRun, when no sink is specp4ified.
     # Note that right now it is still not possible to set a PipelineRun or
-    # TaskRun specific sink, so the default is the only option available.
-    # If no sink is specified, no CloudEvent is generated
+    # TaskRun specp4ific sink, so the default is the only option available.
+    # If no sink is specp4ified, no CloudEvent is generated
     # default-cloud-events-sink:
 
     # default-task-run-workspace-binding contains the default workspace
     # configuration provided for any Workspaces that a Task declares
-    # but that a TaskRun does not explicitly provide.
+    # but that a TaskRun does not explicp4itly provide.
     # default-task-run-workspace-binding: |
     #   emptyDir: {}
   default-service-account: pipeline

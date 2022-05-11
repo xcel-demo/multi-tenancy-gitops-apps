@@ -13,7 +13,7 @@ spec:
       kind: PipelineRun
       metadata:
         generateName: ace-integration-server-$(tt.params.source-repo)-
-        namespace: ci
+        namespace: cp4i
       spec:
         params:
           - name: is-source-repo-url

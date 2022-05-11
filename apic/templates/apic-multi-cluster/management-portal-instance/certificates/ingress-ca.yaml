@@ -18,7 +18,7 @@ spec:
   commonName: "ingress-ca"
   usages:
   - digital signature
-  - key encipherment
+  - key encp4ipherment
   - cert sign
   isCA: true
   issuerRef:

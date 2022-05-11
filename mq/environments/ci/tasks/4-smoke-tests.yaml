@@ -3,8 +3,8 @@ kind: Task
 metadata:
   name: ibm-smoke-tests
   annotations:
-    description: Deploys the application to the CI environment for verification using the provided helm chart
-    app.openshift.io/description: Deploys the application to the CI environment for verification using the provided helm chart
+    description: Deploys the application to the cp4i environment for verification using the provided helm chart
+    app.openshift.io/description: Deploys the application to the cp4i environment for verification using the provided helm chart
     app.openshift.io/vcs-uri: https://github.com/IBM/ibm-garage-tekton-tasks
     app.openshift.io/vcs-ref: master
   labels:
@@ -162,13 +162,13 @@ spec:
           helm lint ${CHART_PATH}
 
           PREFIX=""
-          if [[ -f "${CHART_PATH}/requirements.yaml" ]] || grep -Eq "^dependencies:" "${CHART_PATH}/Chart.yaml"; then
+          if [[ -f "${CHART_PATH}/requirements.yaml" ]] || grep -Eq "^dependencp4ies:" "${CHART_PATH}/Chart.yaml"; then
               DEPENDENCY_FILE="${CHART_PATH}/Chart.yaml"
               if [[ -f "${CHART_PATH}/requirements.yaml" ]]; then
                   DEPENDENCY_FILE="${CHART_PATH}/requirements.yaml"
               fi
 
-              PREFIX="$(yq r -j "${DEPENDENCY_FILE}" | jq -r '.dependencies | .[] | .alias // .name' | head -1)."
+              PREFIX="$(yq r -j "${DEPENDENCY_FILE}" | jq -r '.dependencp4ies | .[] | .alias // .name' | head -1)."
           fi
 
           # Update helm chart with repository and tag values
@@ -186,7 +186,7 @@ spec:
 
           helm dep update "${CHART_PATH}"
 
-          # Using 'upgrade --install" for rolling updates. Note that subsequent updates will occur in the same namespace the release is currently deployed in, ignoring the explicit--namespace argument".
+          # Using 'upgrade --install" for rolling updates. Note that subsequent updates will occur in the same namespace the release is currently deployed in, ignoring the explicp4it--namespace argument".
           helm template ${RELEASE_NAME} ${CHART_PATH} \
               --namespace ${APP_NAMESPACE} \
               --set ${PREFIX}ingress.tlsSecretName="${TLS_SECRET_NAME}" \

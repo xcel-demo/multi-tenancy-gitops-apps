@@ -85,7 +85,7 @@ spec:
         npm i -g release-it
 
         release-it patch \
-          --ci \
+          --cp4i \
           --no-npm \
           --no-git.push \
           --no-git.requireCleanWorkingDir \

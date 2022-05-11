@@ -203,16 +203,16 @@ spec:
             git commit -m "Updates ${APP_NAME} to ${VERSION}"
             git push -v
           else
-            git checkout -b cntk-ci-pipeline-${APP_NAME}-${APP_VERSION}
+            git checkout -b cntk-cp4i-pipeline-${APP_NAME}-${APP_VERSION}
 
             # push changes to git
             git status
             git add "${SUBDIR_DEST}/"
             git commit -m "Cloudnative toolkit pipeline updates ${APP_NAME}" --no-edit --signoff
 
-            git push origin cntk-ci-pipeline-${APP_NAME}-${APP_VERSION}
+            git push origin cntk-cp4i-pipeline-${APP_NAME}-${APP_VERSION}
 
             GIT_PUSH_URL="${PROTOCOL}://api.github.com/repos/${GIT_ORG}/${GIT_REPO}/pulls"
-            curl -u ${GIT_AUTH_USER}:${GIT_AUTH_PWD} -d '{"title":"PR to promote to '$(params.dest-environment)' for '$(params.app-name)'","base":"'${GIT_BRANCH}'", "head":"'${GIT_ORG}':cntk-ci-pipeline-'${APP_NAME}'-'${APP_VERSION}'"}' ${GIT_PUSH_URL}
+            curl -u ${GIT_AUTH_USER}:${GIT_AUTH_PWD} -d '{"title":"PR to promote to '$(params.dest-environment)' for '$(params.app-name)'","base":"'${GIT_BRANCH}'", "head":"'${GIT_ORG}':cntk-cp4i-pipeline-'${APP_NAME}'-'${APP_VERSION}'"}' ${GIT_PUSH_URL}
 
           fi

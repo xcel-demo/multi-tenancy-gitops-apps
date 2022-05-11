@@ -75,7 +75,7 @@ spec:
         else
             argocd app sync $(params.argoAppName)
             until [[ "${IMAGE_SERVER_ARGO}" = "${IMAGE_SERVER_REPO}" && "${IMAGE_REPOSITORY_ARGO}" = "${IMAGE_REPOSITORY_REPO}" && "${IMAGE_VERSION_ARGO}" = "${IMAGE_VERSION_REPO}" ]]; do
-              echo "Syncing !!! ... Deployment is getting updated"
+              echo "Syncp4ing !!! ... Deployment is getting updated"
               sleep 10
               IMAGE_NAME=$(argocd app manifests $(params.argoAppName) | grep image: | sed 's/^.*: //')
               IMAGE_SERVER_ARGO="$(echo "${IMAGE_NAME}" | awk -F / '{print $1}')"

@@ -12,7 +12,7 @@ spec:
   olm_ent_option_bai: false
   olm_demo_application: false
   olm_deployment_type: demo
-  olm_ent_decisions_ads: false
+  olm_ent_decp4isions_ads: false
   olm_ent_option_adp:
     cmis: false
     css: false
@@ -68,16 +68,16 @@ spec:
   olm_ent_option_ads:
     ads_designer: true
     ads_runtime: true
-  olm_demo_decisions: true
+  olm_demo_decp4isions: true
   olm_demo_document_processing: false
   olm_demo_workflow: true
   olm_demo_content: false
   olm_demo_option_bai: true
   olm_ent_application: false
-  olm_ent_option_decisions:
-    decisionCenter: false
-    decisionRunner: false
-    decisionServerRuntime: false
+  olm_ent_option_decp4isions:
+    decp4isionCenter: false
+    decp4isionRunner: false
+    decp4isionServerRuntime: false
     ums: false
   olm_demo_option_adp:
     cmis: false
@@ -90,11 +90,11 @@ spec:
     ier: false
     tm: false
     ums: false
-  olm_ent_decisions: false
+  olm_ent_decp4isions: false
   olm_ent_document_processing: false
   olm_ent_content: false
   appVersion: 21.0.1.1
-  olm_demo_decisions_ads: false
+  olm_demo_decp4isions_ads: false
   datasource_configuration:
     dc_ca_datasource:
       tenant_databases: []

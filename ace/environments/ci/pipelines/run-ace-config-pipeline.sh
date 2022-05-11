@@ -3,7 +3,7 @@
 if [ -z ${GIT_ORG} ]; then echo "Please set GIT_ORG when running script"; exit 1; fi
 
 tkn pipeline start \
-  -n ci \
+  -n cp4i \
   ace-config \
   --param is-config-repo-url=git@github.com:${GIT_ORG}/ace-config.git \
   --param is-infra-repo-url=git@github.com:${GIT_ORG}/ace-infra.git \

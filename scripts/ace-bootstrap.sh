@@ -40,13 +40,13 @@ ace_git_pull () {
     popd
 }
 ace_kubeseal_git () {
-    pushd $ROOTDIR/ace/environments/ci/secrets
+    pushd $ROOTDIR/ace/environments/cp4i/secrets
     source git-credentials-secret.sh
     popd
 }
 
 ace_gitops_repo_cm () {
-    pushd $ROOTDIR/ace/environments/ci/configmaps
+    pushd $ROOTDIR/ace/environments/cp4i/configmaps
     source gitops-repo-configmap.sh
     popd
 }

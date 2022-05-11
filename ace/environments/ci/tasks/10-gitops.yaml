@@ -176,7 +176,7 @@ spec:
             cat "${SUBDIR}/${YAML_FILE}"
 
             yq r "${SUBDIR}/${YAML_FILE}" -j | \
-              jq --arg APP_NAME "${APP_NAME}" --arg VERSION "${VERSION}" --arg REPO "${HELM_URL}" '.dependencies |= map((select(.name == $APP_NAME) | .version = $VERSION | .repository = $REPO) // .)' | \
+              jq --arg APP_NAME "${APP_NAME}" --arg VERSION "${VERSION}" --arg REPO "${HELM_URL}" '.dependencp4ies |= map((select(.name == $APP_NAME) | .version = $VERSION | .repository = $REPO) // .)' | \
               yq r --prettyPrint - > "${SUBDIR}/${YAML_FILE}.new"
 
             rm "${SUBDIR}/${YAML_FILE}"
@@ -200,7 +200,7 @@ spec:
           EOF
 
           cat <<EOF >"${SUBDIR}/${YAML_FILE}"
-          dependencies:
+          dependencp4ies:
             - name: ${APP_NAME}
               version: ${VERSION}
               repository: >-

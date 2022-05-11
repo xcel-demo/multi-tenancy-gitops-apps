@@ -35,13 +35,13 @@ rules:
   - apiGroups:
       - extensions
     resources:
-      - podsecuritypolicies
+      - podsecuritypolicp4ies
     verbs:
       - "*"
   - apiGroups:
       - policy
     resources:
-      - podsecuritypolicies
+      - podsecuritypolicp4ies
     verbs:
       - "*"
   - apiGroups:

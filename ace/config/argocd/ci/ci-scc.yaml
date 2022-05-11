@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: ci-scc
+  name: cp4i-scc
   annotations:
     argocd.argoproj.io/sync-wave: "250"
   labels:
@@ -11,11 +11,11 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: ci
+    namespace: cp4i
     server: https://kubernetes.default.svc
   project: applications
   source:
-    path: shared/config/ci/instances/scc
+    path: shared/config/cp4i/instances/scc
     repoURL: https://github.com/xcel-demo/multi-tenancy-gitops-apps.git
     targetRevision: master
   syncPolicy:

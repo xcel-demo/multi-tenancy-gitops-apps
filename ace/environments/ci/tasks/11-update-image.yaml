@@ -94,7 +94,7 @@ spec:
 
           echo ${IMAGE_URL}:${IMAGE_VERSION}
 
-          git checkout -b cntk-ci-pipeline-${IMAGE_REPOSITORY}-${IMAGE_VERSION}
+          git checkout -b cntk-cp4i-pipeline-${IMAGE_REPOSITORY}-${IMAGE_VERSION}
 
           # update value for key applicationImage
           sed -i "/repository:/c\  repository:  ${IMAGE_URL}" ./values.yaml
@@ -114,7 +114,7 @@ spec:
           git remote rm origin
 
           git remote add origin ${GIT_URL} > /dev/null 2>&1
-          git push origin cntk-ci-pipeline-${IMAGE_REPOSITORY}-${IMAGE_VERSION}
+          git push origin cntk-cp4i-pipeline-${IMAGE_REPOSITORY}-${IMAGE_VERSION}
 
           GIT_PUSH_URL="${GIT_PROTOCOL}://api.github.com/repos/${GIT_ORG}/${GIT_REPO}/pulls"
-          curl -u ${GIT_USERNAME}:${GIT_PASSWORD} -d '{"title":"PR to promote to $(params.git-branch) environment","base":"'$(params.git-branch)'", "head":"'${GIT_ORG}':cntk-ci-pipeline-'${IMAGE_REPOSITORY}'-'${IMAGE_VERSION}'"}' ${GIT_PUSH_URL}
+          curl -u ${GIT_USERNAME}:${GIT_PASSWORD} -d '{"title":"PR to promote to $(params.git-branch) environment","base":"'$(params.git-branch)'", "head":"'${GIT_ORG}':cntk-cp4i-pipeline-'${IMAGE_REPOSITORY}'-'${IMAGE_VERSION}'"}' ${GIT_PUSH_URL}

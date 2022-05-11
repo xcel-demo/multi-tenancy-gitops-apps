@@ -30,44 +30,44 @@ wait_kubeseal_ready () {
 }
 
 mq_kubeseal_artifactory () {
-    pushd $ROOTDIR/mq/environments/ci/secrets
+    pushd $ROOTDIR/mq/environments/cp4i/secrets
     source artifactory-access-secret.sh
     popd
 }
 
 mq_kubeseal_git () {
-    pushd $ROOTDIR/mq/environments/ci/secrets
+    pushd $ROOTDIR/mq/environments/cp4i/secrets
     source git-credentials-secret.sh
     popd
 }
 
 mq_gitops_repo_cm () {
-    pushd $ROOTDIR/mq/environments/ci/configmaps
+    pushd $ROOTDIR/mq/environments/cp4i/configmaps
     source gitops-repo-configmap.sh
     popd    
 }
 
 kubseal_ibm_entitled_registry () {
-    pushd $ROOTDIR/mq/environments/ci/secrets
+    pushd $ROOTDIR/mq/environments/cp4i/secrets
     source ibm-entitled-registry-credentials-secret.sh
     popd    
 }
 
-mq_kubseal_client_jks_pass_ci () {
-    pushd $ROOTDIR/mq/environments/ci/secrets
+mq_kubseal_client_jks_pass_cp4i () {
+    pushd $ROOTDIR/mq/environments/cp4i/secrets
     source mq-client-jks-password-secret.sh
     popd    
 }
 
-mq_client_certificate_ci () {
-    pushd $ROOTDIR/mq/environments/ci/certificates
-    source ci-mq-client-certificate.sh
+mq_client_certificate_cp4i () {
+    pushd $ROOTDIR/mq/environments/cp4i/certificates
+    source cp4i-mq-client-certificate.sh
     popd    
 }
 
-mq_server_certificate_ci () {
-    pushd $ROOTDIR/mq/environments/ci/certificates
-    source ci-mq-server-certificate.sh
+mq_server_certificate_cp4i () {
+    pushd $ROOTDIR/mq/environments/cp4i/certificates
+    source cp4i-mq-server-certificate.sh
     popd    
 }
 
@@ -148,14 +148,14 @@ mq_git_add_commit_push () {
 # main
 wait_kubeseal_ready
 
-# execute scripts in mq/environments/ci 
+# execute scripts in mq/environments/cp4i 
 mq_kubeseal_artifactory
 mq_kubeseal_git
 mq_gitops_repo_cm
 
-# mq_kubseal_client_jks_pass_ci
-# mq_client_certificate_ci
-# mq_server_certificate_ci
+# mq_kubseal_client_jks_pass_cp4i
+# mq_client_certificate_cp4i
+# mq_server_certificate_cp4i
 # kubseal_ibm_entitled_registry
 
 # execute scripts in mq/environments/dev

@@ -269,9 +269,9 @@ items:
       name: sshPrivateKey
       type: string
     results:
-    - description: The precise commit SHA that was fetched by this Task
+    - description: The precp4ise commit SHA that was fetched by this Task
       name: commit
-    - description: The precise URL that was fetched by this Task
+    - description: The precp4ise URL that was fetched by this Task
       name: url
     steps:
     - image: $(params.gitInitImage)

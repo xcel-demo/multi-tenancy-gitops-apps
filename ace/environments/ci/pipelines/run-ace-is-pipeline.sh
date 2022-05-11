@@ -3,7 +3,7 @@
 if [ -z ${GIT_ORG} ]; then echo "Please set GIT_ORG when running script"; exit 1; fi
 if [ -z ${SOURCE_REPO} ]; then echo "Please set SOURCE_REPO when running script"; exit 1; fi
 
-tkn -n ci pipeline start \
+tkn -n cp4i pipeline start \
   ace-integration-server \
   --param is-source-repo-url=git@github.com:${GIT_ORG}/${SOURCE_REPO}.git \
   --param is-infra-repo-url=git@github.com:${GIT_ORG}/ace-infra.git \
